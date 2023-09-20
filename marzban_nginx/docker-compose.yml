@@ -22,7 +22,7 @@ services:
     networks: # --------------------------------- set network
       - user_yasin
     ports:
-      - "80:80"
+      - "443:443"
     restart: always
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
