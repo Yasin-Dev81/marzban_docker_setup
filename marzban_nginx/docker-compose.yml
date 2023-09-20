@@ -1,6 +1,6 @@
 services:
   marzban:
-    container_name: marzban_panel
+    container_name: marzban_panel_main
     image: gozargah/marzban:latest
     restart: always
     env_file: .env
@@ -8,5 +8,23 @@ services:
     volumes:
       - /var/lib/marzban:/var/lib/marzban
       - ./index.html:/code/app/templates/subscription/index.html
-      - /etc/letsencrypt/live/sub.yasin-dev81.ir/fullchain.pem:/cert/fullchain.pem
-      - /etc/letsencrypt/live/sub.yasin-dev81.ir/privkey.pem:/cert/key.pem
+
+    expose:
+      - "8000"
+
+  nginx:
+    container_name: marzban_nginx_main
+    command: nginx -g 'daemon off;'
+    depends_on:
+      - marzban_panel_main
+    image: nginx:latest
+    networks:
+      - main
+    ports:
+      - "80:80"
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      # ------------------------- set domain
+      - /etc/letsencrypt/live/example.com/fullchain.pem:/cert/fullchain.pem
+      - /etc/letsencrypt/live/example.com/privkey.pem:/cert/key.pem
