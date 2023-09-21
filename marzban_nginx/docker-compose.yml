@@ -8,3 +8,7 @@ services:
     volumes:
       - /var/lib/marzban:/var/lib/marzban
       - ./index.html:/code/app/templates/subscription/index.html
+      - ./assets:/var/lib/marzban/assets
+      # -------------------------- set domain
+      - /etc/letsencrypt/live/example.com:/var/lib/marzban/certs
+      - ./xray_config.json:/code/xray_config.json
