@@ -5,10 +5,14 @@ services:
     restart: always
     env_file: .env
     network_mode: host
+    ports:
+      - "1234:443"
+      - "8000:8000"
     volumes:
       - /var/lib/marzban:/var/lib/marzban
       - ./index.html:/code/app/templates/subscription/index.html
       - ./assets:/var/lib/marzban/assets
       # -------------------------- set domain
-      - /etc/letsencrypt/live/example.com:/var/lib/marzban/certs
+      - /etc/letsencrypt/live/example.com/fullchain.pem:/certs/fullchain.pem
+      - /etc/letsencrypt/live/example.com/privkey.pem:/certs/privkey.pem
       - ./xray_config.json:/code/xray_config.json
