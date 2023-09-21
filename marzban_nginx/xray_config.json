@@ -4,181 +4,27 @@
     },
     "inbounds": [
         {
-            "tag": "TROJAN_FALLBACK_INBOUND",
-            "port": 443,
-            "protocol": "trojan",
-            "settings": {
-                "clients": [],
-                "decryption": "none",
-                "fallbacks": [
-                    {
-                        "path": "/lw",
-                        "dest": "@vless-ws",
-                        "xver": 2
-                    },
-                    {
-                        "path": "/mw",
-                        "dest": "@vmess-ws",
-                        "xver": 2
-                    },
-                    {
-                        "path": "/tw",
-                        "dest": "@trojan-ws",
-                        "xver": 2
-                    },
-                    {
-                        "alpn": "h2",
-                        "dest": "/run/nginx-h2c.socket",
-                        "xver": 2
-                    },
-                    {
-                        "dest": "/run/nginx-h1.socket",
-                        "xver": 2
-                    }
-                ]
-            },
-            "streamSettings": {
-                 "network": "tcp",
-                 "security": "tls",
-                 "tlsSettings": {
-                     "serverName": "www.example.com",
-                     "certificates": [
-                         {
-                             "ocspStapling": 3600,
-                             "certificateFile": "/var/lib/marzban/certs/fullchain.pem",
-                             "keyFile": "/var/lib/marzban/certs/privkey.pem"
-                         }
-                     ],
-                     "minVersion": "1.2",
-                     "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
-                     "alpn": [
-                         "h2",
-                         "http/1.1"
-                     ]
-                 }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls"
-                ]
-            }
-        },
-        {
-            "tag": "VLESS_WS_INBOUND",
-            "listen": "@vless-ws",
+            "tag": "Vless_WS_Inbound",
+            "listen": "127.0.0.1",
+            "port": 2012,
             "protocol": "vless",
             "settings": {
-                "clients": [],
-                "decryption": "none"
+              "clients": [],
+              "decryption": "none"
             },
             "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": true,
-                    "path": "/lw"
-                }
+              "network": "ws",
+              "security": "none",
+              "wsSettings": {
+                "path": "/marzban/me/2012"
+              }
             },
             "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls"
-                ]
-            }
-        },
-        {
-            "tag": "VMESS_WS_INBOUND",
-            "listen": "@vmess-ws",
-            "protocol": "vmess",
-            "settings": {
-                "clients": []
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": true,
-                    "path": "/mw"
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls"
-                ]
-            }
-        },
-        {
-            "tag": "TROJAN_WS_INBOUND",
-            "listen": "@trojan-ws",
-            "protocol": "trojan",
-            "settings": {
-                "clients": []
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": true,
-                    "path": "/tw"
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": [
-                    "http",
-                    "tls"
-                ]
-            }
-        },
-        {
-            "tag": "TROJAN_GRPC_INBOUND",
-            "listen": "/run/xray-trojan-grpc.socket,0666",
-            "protocol": "trojan",
-            "settings": {
-                "clients": []
-            },
-            "streamSettings": {
-                "network": "grpc",
-                "security": "none",
-                "grpcSettings": {
-                    "serviceName": "tg"
-                }
-            }
-        },
-        {
-            "tag": "VLESS_GRPC_INBOUND",
-            "listen": "/run/xray-vless-grpc.socket,0666",
-            "protocol": "vless",
-            "settings": {
-                "clients": [],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "grpc",
-                "security": "none",
-                "grpcSettings": {
-                    "serviceName": "lg"
-                }
-            }
-        },
-        {
-            "tag": "VMESS_GRPC_INBOUND",
-            "listen": "/run/xray-vmess-grpc.socket,0666",
-            "protocol": "vmess",
-            "settings": {
-                "clients": []
-            },
-            "streamSettings": {
-                "network": "grpc",
-                "security": "none",
-                "grpcSettings": {
-                    "serviceName": "mg"
-                }
+              "enabled": true,
+              "destOverride": [
+                "http",
+                "tls"
+              ]
             }
         }
     ],
