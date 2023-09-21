@@ -4,27 +4,33 @@
     },
     "inbounds": [
         {
-            "tag": "Vless_WS_Inbound",
-            "listen": "127.0.0.1",
-            "port": 2012,
+            "tag": "VLESS WS INBOUND",
+            "listen": "0.0.0.0",
+            "port": 2095,
             "protocol": "vless",
             "settings": {
-              "clients": [],
-              "decryption": "none"
+                "clients": [],
+                "decryption": "none"
             },
             "streamSettings": {
-              "network": "ws",
-              "security": "none",
-              "wsSettings": {
-                "path": "/marzban/me/2012"
-              }
-            },
-            "sniffing": {
-              "enabled": true,
-              "destOverride": [
-                "http",
-                "tls"
-              ]
+                "network": "ws",
+                "wsSettings": {
+                    "path": "/marzban/me/2095"
+                }
+                 ,
+                 "security": "tls",
+                 "tlsSettings": {
+                     "serverName": "SERVER_NAME",
+                     "certificates": [
+                         {
+                             "ocspStapling": 3600,
+                             "certificateFile": "/certs/fullchain.pem",
+                             "keyFile": "/certs/privkey.pem"
+                         }
+                     ],
+                     "minVersion": "1.2",
+                     "cipherSuites": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+                 }
             }
         }
     ],
